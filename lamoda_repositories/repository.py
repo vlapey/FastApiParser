@@ -1,7 +1,7 @@
 import pymongo
 from lamoda_helpers.html_helper import *
 
-client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
+client = pymongo.MongoClient('mongodb://mongo:27017/')
 db = client['lamoda_db']
 collection = db['goods']
 

@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   parser:
+    container_name: parser
     build: .
     ports:
       - "8000:8000"
