@@ -1,5 +1,5 @@
-from requests_helper import *
-from json_helper import *
+from lamoda_helpers.requests_helper import *
+from lamoda_helpers.json_helper import *
 
 root_url = 'https://www.lamoda.by'
 
