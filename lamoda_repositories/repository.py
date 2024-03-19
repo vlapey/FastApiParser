@@ -1,8 +1,13 @@
 import pymongo
 from lamoda_helpers.html_helper import *
+import os
+from dotenv import load_dotenv
 
-client = pymongo.MongoClient('mongodb://mongo:27017/')
-db = client['lamoda_db']
+
+load_dotenv()
+
+client = pymongo.MongoClient(os.getenv('CLIENT'))
+db = client[os.getenv('DB')]
 collection = db['goods']
 
 gender_category_pages = [
