@@ -1,11 +1,10 @@
 from lamoda_helpers.requests_helper import *
 from lamoda_helpers.json_helper import *
-
-root_url = 'https://www.lamoda.by'
+from constants import lamoda_root_url
 
 
 def get_gender_categories(gender_url):
-    gender_page_url = root_url + gender_url
+    gender_page_url = lamoda_root_url + gender_url
     gender_soup = get_soup_by_url(gender_page_url)
     script = get_script_with_page_state_json(gender_soup)
 
@@ -16,7 +15,7 @@ def get_gender_categories(gender_url):
 
 
 def get_category_pages_count(category_url):
-    category_page_url = root_url + category_url
+    category_page_url = lamoda_root_url + category_url
     category_soup = get_soup_by_url(category_page_url)
 
     script = get_script_with_page_state_json(category_soup)
@@ -50,7 +49,7 @@ def get_name_by_description_element(description):
 
 
 def get_page_goods(category_url, page):
-    page_url = root_url + category_url + '?sitelink=topmenuM&l=4&page=' + str(page)
+    page_url = lamoda_root_url + category_url + '?sitelink=topmenuM&l=4&page=' + str(page)
     page_soup = get_soup_by_url(page_url)
 
     cards = page_soup.findAll('div', class_='x-product-card__card')
