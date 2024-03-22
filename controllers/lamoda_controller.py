@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from lamoda_repositories.repository import parse, get_products
+from repositories.lamoda_repository import parse, get_products
 
 router = APIRouter()
 
