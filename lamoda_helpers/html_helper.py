@@ -1,6 +1,10 @@
 from lamoda_helpers.requests_helper import *
 from lamoda_helpers.json_helper import *
-from constants import lamoda_root_url
+from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
+lamoda_root_url = getenv('LAMODA_ROOT_URL')
 
 
 def get_gender_categories(gender_url):

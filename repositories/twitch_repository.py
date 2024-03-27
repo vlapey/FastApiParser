@@ -1,7 +1,11 @@
 import os
 from auth.twitch_auth import get_access_token
 import requests
-from constants import twitch_scraper_url
+from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
+twitch_scraper_url = getenv('TWITCH_SCRAPER_URL')
 
 
 def get_streamed_games_json() -> dict:
