@@ -3,7 +3,6 @@ from lamoda_helpers.html_helper import *
 import os
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 client = pymongo.MongoClient(os.getenv('CLIENT'))
