@@ -1,6 +1,7 @@
 version: '3.9'
 services:
-  app:
+  parser:
+    container_name: parser
     build: .
     ports:
       - "8000:8000"
@@ -12,4 +13,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./data:/data/db
+      - dbdata:/data/db
+
+volumes:
+  dbdata:
