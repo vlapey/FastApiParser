@@ -12,12 +12,24 @@ TWITCH_CLIENT_SECRET = getenv('TWITCH_CLIENT_SECRET')
 
 @router.get('/games')
 async def get_streamed_games():
+    selector = 'games'
+    cached_data = await get_cached_data(selector)
+    if cached_data:
+        return cached_data
+
     data = await get_streamed_games_json()
-    return await get_streamed_games_list(data)
+    game_list = await get_streamed_games_list(data)
+    return await cache_data(game_list, selector)
 
 
 @router.get("/streamers")
-async def get_streamer_nicknames():
+async def get_streamers():
+    selector = 'streamers'
+    cached_data = await get_cached_data(selector)
+    if cached_data:
+        return cached_data
+
     data = await get_streamers_json()
-    return await get_streamers_list(data)
+    streamers_list = await get_streamers_list(data)
+    return await cache_data(streamers_list, selector)
 
