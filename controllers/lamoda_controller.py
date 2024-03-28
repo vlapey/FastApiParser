@@ -5,10 +5,10 @@ router = APIRouter()
 
 
 @router.get('/products')
-def get_current_products():
-    return get_products()
+async def get_current_products():
+    return await get_products()
 
 
 @router.get('/parse')
-def parse_products():
-    return parse()
+async def parse_products():
+    return await parse()
