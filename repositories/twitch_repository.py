@@ -1,16 +1,11 @@
 import aiohttp
-import motor.motor_asyncio
 from auth.twitch_auth import get_access_token
 from os import getenv
 from dotenv import load_dotenv
+from persistence.db_conn import TwitchDbConnection
 
 load_dotenv()
 twitch_scraper_url = getenv('TWITCH_SCRAPER_URL')
-
-client = motor.motor_asyncio.AsyncIOMotorClient(getenv('CLIENT'))
-db = client[getenv('DB')]
-collection_streamers = db['streamers']
-collection_games = db['games']
 
 
 async def get_streamed_games_json() -> dict:
@@ -56,7 +51,7 @@ async def get_streamed_games_list(data) -> list:
             }
             games.append(game)
 
-    await collection_games.insert_many(games)
+    await TwitchDbConnection.collection_games.insert_many(games)
     return await get_data(0)
 
 
@@ -68,13 +63,13 @@ async def get_streamers_list(data) -> list:
             'viewer_count': stream['viewer_count']
         }
         streamers.append(info)
-    await collection_streamers.insert_many(streamers)
+    await TwitchDbConnection.collection_streamers.insert_many(streamers)
     return await get_data(1)
 
 
 async def get_data(selector):
     if selector:
-        streamers = await collection_streamers.find({}, {"_id": False}).to_list(length=None)
+        streamers = await TwitchDbConnection.collection_streamers.find({}, {"_id": False}).to_list(length=None)
         return streamers
-    games = await collection_games.find({}, {"_id": False}).to_list(length=None)
+    games = await TwitchDbConnection.collection_games.find({}, {"_id": False}).to_list(length=None)
     return games
