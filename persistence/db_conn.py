@@ -1,7 +1,8 @@
 from os import getenv
-import motor.motor_asyncio
 from dotenv import load_dotenv
-import aioredis
+import redis.asyncio as redis
+import motor.motor_asyncio
+
 
 load_dotenv()
 
@@ -11,13 +12,13 @@ db = client[getenv('DB')]
 REDIS_HOST = getenv('REDIS_HOST')
 REDIS_PORT = getenv('REDIS_PORT')
 
-redis_pool = aioredis.from_url(f'redis://{REDIS_HOST}:{REDIS_PORT}')
+redis_pool = redis.from_url(f'redis://{REDIS_HOST}:{REDIS_PORT}')
 
 
-class LamodaDbConnection:
+class LamodaMongoConnection:
     collection = db['goods']
 
 
-class TwitchDbConnection:
+class TwitchMongoConnection:
     collection_streamers = db['streamers']
     collection_games = db['games']
