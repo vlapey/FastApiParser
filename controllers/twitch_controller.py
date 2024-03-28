@@ -1,19 +1,35 @@
 from fastapi import APIRouter
 from repositories.twitch_repository import *
+from os import getenv
+from dotenv import load_dotenv
 
+load_dotenv()
 router = APIRouter()
 
-TWITCH_CLIENT_ID = os.getenv('TWITCH_CLIENT_ID')
-TWITCH_CLIENT_SECRET = os.getenv('TWITCH_CLIENT_SECRET')
+TWITCH_CLIENT_ID = getenv('TWITCH_CLIENT_ID')
+TWITCH_CLIENT_SECRET = getenv('TWITCH_CLIENT_SECRET')
 
 
 @router.get('/games')
-def get_streamed_games():
-    data = get_streamed_games_json()
-    return get_streamed_games_list(data)
+async def get_streamed_games():
+    selector = 'games'
+    cached_data = await get_cached_data(selector)
+    if cached_data:
+        return cached_data
+
+    data = await get_streamed_games_json()
+    game_list = await get_streamed_games_list(data)
+    return await cache_data(game_list, selector)
 
 
 @router.get("/streamers")
-def get_streamer_nicknames():
-    data = get_streamers_json()
-    return get_streamers_list(data)
+async def get_streamers():
+    selector = 'streamers'
+    cached_data = await get_cached_data(selector)
+    if cached_data:
+        return cached_data
+
+    data = await get_streamers_json()
+    streamers_list = await get_streamers_list(data)
+    return await cache_data(streamers_list, selector)
+
